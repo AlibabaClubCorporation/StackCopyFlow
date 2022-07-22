@@ -7,7 +7,7 @@ class CustomUser( AbstractUser ):
         User model class
     """
 
-    REQUIRED_FIELDS = [ 'first_name', 'last_name', 'gender', 'birth_date', 'password', ]
+    REQUIRED_FIELDS = [ 'first_name', 'last_name', 'gender', 'birth_date', ]
 
     GENDERS = (
         ( 'm', 'male' ),
@@ -15,7 +15,9 @@ class CustomUser( AbstractUser ):
     )
 
     gender = models.CharField( max_length = 1, choices = GENDERS, default = 'm' )
+
     birth_date = models.DateField( default = '2002-10-05' )
+    registration_date = models.DateTimeField( auto_now_add = True )
 
     class Meta:
         verbose_name = 'Custom users'
