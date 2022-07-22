@@ -15,12 +15,12 @@ class CustomUserAdmin( admin.ModelAdmin ):
     readonly_fields = ( 'registration_date', )
 
     fieldsets = (
-        ( 'Общее', {
+        ( 'General', {
             'fields' : ( ( 'username', ), ( 'registration_date' ), )
         }),
 
-        ( 'О пользователе', {
+        ( 'About user', {
             'classes' : ( 'collapse', ),
-            'fields' : ( ('first_name', 'last_name'), 'gender', 'birth_date' )
+            'fields' : ( ('first_name', 'last_name'), ( 'gender', ), ( 'birth_date', ), )
         })
     )

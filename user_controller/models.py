@@ -19,7 +19,11 @@ class CustomUser( AbstractUser ):
     birth_date = models.DateField( default = '2002-10-05' )
     registration_date = models.DateTimeField( auto_now_add = True )
 
+
+    def __str__(self) -> str:
+        return f'User: {self.username} | {self.pk}'
+
+
     class Meta:
-        verbose_name = 'Custom users'
-        verbose_name_plural = 'Custom user'
+        pass
         # ordering = [ 'rating', '-birth_date' ]
