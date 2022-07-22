@@ -37,6 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'rest_framework.authtoken',
+
+    'djoser',
+
+    'forum.apps.ForumConfig',
+    'user_controller.apps.UserControllerConfig',
 ]
 
 MIDDLEWARE = [
@@ -103,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -121,3 +129,32 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'PAGE_SIZE': 100,
+}
+
+# DJOSER {
+#     'PASSWORD_RESET_CONFIRM_URL' : '...' - URL для подтверждения сброса пароля 
+#     'USERNAME_RESET_CONFIRM_URL' : '...' - URL для подтверждения сброса имени 
+#     'ACTIVATION_URL' : '...' - URL для активации
+#     'SEND_ACTIVATION_EMAIL' : 'True/False'  -  Для отправки email 
+#     'SERIALIZERS' : {} - 
+# }
+
+# EMAIL_USE_LTS = True/False
+# EMAIL_HOST = 'smpt.gmail.com' - Хост отпрвки 
+# EMAIL_HOST_USER = 'почта отправителя' - Почта отправителя 
+# EMAIL_HOST_PASSWORD = 'пароль от почты отправителя' - Пароль от почты отпрвителя 
+# EMAIL_POER = 587
+
+
+
+# User
+AUTH_USER_MODEL = 'user_controller.CustomUser'
