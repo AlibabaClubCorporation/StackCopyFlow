@@ -3,6 +3,7 @@ commands:
 	pip install django-rest-framework
 	pip install djoser
 	pip install mptt
+	pip install django-debug-toolbar
 
 
 requirements:
@@ -15,6 +16,7 @@ requirements:
 	djoser 2.1.0
 	djangorestframework 3.13.1
 	django-mptt 0.13.4
+	django-debug-toolbar 3.5.0
 
 
 result of "pip list":
@@ -28,6 +30,7 @@ result of "pip list":
 	cryptography                  37.0.4
 	defusedxml                    0.7.1
 	Django                        4.0.6
+	django-debug-toolbar          3.5.0
 	django-js-asset               2.0.0
 	django-mptt                   0.13.4
 	django-rest-framework         0.1.0

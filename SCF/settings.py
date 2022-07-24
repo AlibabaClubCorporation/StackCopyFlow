@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'djoser',
     'mptt',
+    'debug-toolbar',
 
     'forum.apps.ForumConfig',
     'user_controller.apps.UserControllerConfig',
