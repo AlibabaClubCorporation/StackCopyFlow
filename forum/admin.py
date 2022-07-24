@@ -1,8 +1,10 @@
 from django.contrib import admin
 
+from mptt.admin import MPTTModelAdmin 
+
 from .models import *
 
-# Register your models here.
+
 
 @admin.register( Label )
 class LabelAdmin( admin.ModelAdmin ):
@@ -34,7 +36,7 @@ class QuestionAdmin( admin.ModelAdmin ):
     )
 
 @admin.register( Answer )
-class AnswerAdmin( admin.ModelAdmin ):
+class AnswerAdmin( MPTTModelAdmin ):
     """
         Answer model class for admin panel
     """
@@ -50,6 +52,6 @@ class AnswerAdmin( admin.ModelAdmin ):
 
         ( 'Additionaly', {
             'classes' : ( 'collapse', ),
-            'fields' : ( 'content', )
-        })
+            'fields' : ( ( 'content', ), ( 'parent', ), )
+        }),
     )

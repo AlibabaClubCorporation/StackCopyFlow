@@ -1,5 +1,7 @@
 from django.db import models
 
+from mptt.models import MPTTModel, TreeForeignKey
+
 from user_controller.models import CustomUser
 
 
@@ -27,7 +29,9 @@ class Label( models.Model ):
 
 
     class Meta:
-        ordering = [ 'name', ]
+        ordering = [
+            'name',
+        ]
 
 
 class Question( models.Model ):
@@ -63,10 +67,12 @@ class Question( models.Model ):
 
 
     class Meta:
-        ordering = [ 'date_of_creation', ]
+        ordering = [
+            '-date_of_creation',
+        ]
 
 
-class Answer( models.Model ):
+class Answer( MPTTModel ):
     """
         Question answers model class
     """
@@ -87,7 +93,16 @@ class Answer( models.Model ):
     question = models.ForeignKey(
         to = Question,
         on_delete = models.CASCADE,
-        related_name = 'questions',
+        related_name = 'answers',
+    )
+
+    parent = TreeForeignKey(
+        to = 'self',
+        on_delete = models.CASCADE,
+        related_name = 'children',
+
+        blank = True,
+        null = True,
     )
 
 
@@ -95,6 +110,10 @@ class Answer( models.Model ):
         return f'Answer: {self.pk}'
 
 
-    class Meta:
-        ordering = [ 'date_of_creation', ]
-
+    class MPTTMeta:
+        order_insertion_by = [
+            'question',
+            'level',
+            'tree_id',
+            '-date_of_creation',
+        ]

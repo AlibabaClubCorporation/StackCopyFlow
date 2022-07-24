@@ -159,6 +159,10 @@ REST_FRAMEWORK = {
 # EMAIL_POER = 587
 
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
 
 # User
 AUTH_USER_MODEL = 'user_controller.CustomUser'
