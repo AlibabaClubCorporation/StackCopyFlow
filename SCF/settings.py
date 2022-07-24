@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
     'djoser',
     'mptt',
-    'debug-toolbar',
+    'debug_toolbar',
 
     'forum.apps.ForumConfig',
     'user_controller.apps.UserControllerConfig',
@@ -57,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'SCF.urls'
