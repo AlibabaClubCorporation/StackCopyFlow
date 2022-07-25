@@ -20,7 +20,6 @@ class CustomUserRetrieveSerializer( serializers.ModelSerializer ):
             'username',
             'first_name',
             'last_name',
-            'email',
             'gender',
             'birth_date',
             'registration_date',
