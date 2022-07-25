@@ -7,17 +7,30 @@ class CustomUser( AbstractUser ):
         User model class
     """
 
-    REQUIRED_FIELDS = [ 'first_name', 'last_name', 'gender', 'birth_date', ]
+    REQUIRED_FIELDS = [
+        'first_name',
+        'last_name',
+        'gender',
+        'birth_date',
+    ]
 
     GENDERS = (
         ( 'm', 'male' ),
         ( 'f', 'female'),
     )
 
-    gender = models.CharField( max_length = 1, choices = GENDERS, default = 'm' )
+    gender = models.CharField(
+        max_length = 1,
+        choices = GENDERS,
+        default = 'm'
+    )
 
-    birth_date = models.DateField( default = '2002-10-05' )
-    registration_date = models.DateTimeField( auto_now_add = True )
+    birth_date = models.DateField(
+    )
+
+    registration_date = models.DateTimeField(
+        auto_now_add = True,
+    )
 
 
     def __str__(self) -> str:

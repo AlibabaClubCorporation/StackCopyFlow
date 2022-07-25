@@ -117,3 +117,20 @@ class QuestionCreateSerializer( serializers.ModelSerializer ):
 
             'creator',
         )
+
+
+
+# OTHER SERIALIZERS
+
+class ContentUpdateSerializer( serializers.Serializer ):
+    """
+        Serializer for update content field in models
+    """
+
+    content = serializers.CharField()
+
+    def update(self, instance, validated_data):
+        instance.content = validated_data['content']
+        instance.save()
+
+        return instance

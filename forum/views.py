@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView, UpdateAPIView
 
 from .models import *
 from user_controller.models import *
@@ -30,6 +30,21 @@ class QuestionCreateAPIView( CreateAPIView ):
 
     serializer_class = QuestionCreateSerializer
 
+class QuestionUpdateAPIView( UpdateAPIView ):
+    """
+        View class for update question
+    """
+
+    queryset = Question.objects.all()
+    serializer_class = ContentUpdateSerializer
+
+class QuestionDestroyAPIView( DestroyAPIView ):
+    """
+        View class for destroy question
+    """
+
+    queryset = Question.objects.all()
+
 
 # ANSWER VIEWS
 
@@ -39,3 +54,18 @@ class AnswerCreateAPIView( CreateAPIView ):
     """
 
     serializer_class = AnswerCreateSerializer
+
+class AnswerUpdateAPIView( UpdateAPIView ):
+    """
+        View class for update answer
+    """
+
+    queryset = Answer.objects.all()
+    serializer_class = ContentUpdateSerializer
+
+class AnswerDestroyAPIView( DestroyAPIView ):
+    """
+        View class for destroy answer
+    """
+
+    queryset = Answer.objects.all()
