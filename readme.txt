@@ -14,7 +14,7 @@
 		- Модели Question, Answer и необходимое для их; Создания, Чтения, Изменения, Удаления +
 		- parent_answer у Answer при помощи mptt +
 
-		- Permissions -
+		- Permissions Forum +
 		- Рейтинг -
 
 	Второе ( Не реализованно ) :

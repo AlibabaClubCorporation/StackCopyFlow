@@ -1,8 +1,10 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView, UpdateAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .models import *
-from user_controller.models import *
 from .serilizers import *
+from .permissions import *
+from user_controller.models import *
 
 
 # QUESTION VIEWS
@@ -14,6 +16,7 @@ class QuestionListAPIView( ListAPIView ):
 
     queryset = Question.objects.all()
     serializer_class = QuestionListSerializer
+    permission_classes = ( AllowAny, )
 
 class QuestionRetrieveAPIView( RetrieveAPIView ):
     """
@@ -22,6 +25,7 @@ class QuestionRetrieveAPIView( RetrieveAPIView ):
 
     queryset = Question.objects.all()
     serializer_class = QuestionRetrieveSerializer
+    permission_classes = ( AllowAny, )
 
 class QuestionCreateAPIView( CreateAPIView ):
     """
@@ -29,6 +33,7 @@ class QuestionCreateAPIView( CreateAPIView ):
     """
 
     serializer_class = QuestionCreateSerializer
+    permission_classes = ( IsAuthenticated, )
 
 class QuestionUpdateAPIView( UpdateAPIView ):
     """
@@ -37,6 +42,7 @@ class QuestionUpdateAPIView( UpdateAPIView ):
 
     queryset = Question.objects.all()
     serializer_class = ContentUpdateSerializer
+    permission_classes = ( IsOwnerOrSuperUser, )
 
 class QuestionDestroyAPIView( DestroyAPIView ):
     """
@@ -44,6 +50,7 @@ class QuestionDestroyAPIView( DestroyAPIView ):
     """
 
     queryset = Question.objects.all()
+    permission_classes = ( IsOwnerOrSuperUser, )
 
 
 # ANSWER VIEWS
@@ -54,6 +61,7 @@ class AnswerCreateAPIView( CreateAPIView ):
     """
 
     serializer_class = AnswerCreateSerializer
+    permission_classes = ( IsAuthenticated, )
 
 class AnswerUpdateAPIView( UpdateAPIView ):
     """
@@ -62,6 +70,7 @@ class AnswerUpdateAPIView( UpdateAPIView ):
 
     queryset = Answer.objects.all()
     serializer_class = ContentUpdateSerializer
+    permission_classes = ( IsOwnerOrSuperUser, )
 
 class AnswerDestroyAPIView( DestroyAPIView ):
     """
@@ -69,3 +78,4 @@ class AnswerDestroyAPIView( DestroyAPIView ):
     """
 
     queryset = Answer.objects.all()
+    permission_classes = ( IsOwnerOrSuperUser, )
