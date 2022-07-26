@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import *
+from .services.service_of_rating import RatingManager
 
 
 
@@ -73,6 +74,7 @@ class QuestionListSerializer( serializers.ModelSerializer ):
         model = Question
         fields = (
             'title',
+            'rating',
             'date_of_creation',
             'labels',
             'is_answered',
@@ -89,6 +91,8 @@ class QuestionRetrieveSerializer( serializers.ModelSerializer ):
     """
 
     answers = serializers.SerializerMethodField()
+    is_rated_by_current_user = serializers.SerializerMethodField()
+
     correct_answer = AnswerSerializer( many = False )
     labels = LabelListSerializer( many = True )
 
@@ -97,11 +101,14 @@ class QuestionRetrieveSerializer( serializers.ModelSerializer ):
         fields = (
             'title',
             'content',
+            'rating',
             'date_of_creation',
             'labels',
             'creator',
             'correct_answer',
             'answers',
+
+            'is_rated_by_current_user',
 
             'id',
         )
@@ -115,6 +122,12 @@ class QuestionRetrieveSerializer( serializers.ModelSerializer ):
             ),
             many = True,
         ).data
+    
+    def get_is_rated_by_current_user( self, obj ):
+        user = self.context['request'].user
+
+        return RatingManager.is_object_having_rating_from_user( user, obj )
+
 
 class QuestionCreateSerializer( serializers.ModelSerializer ):
     """
@@ -133,6 +146,32 @@ class QuestionCreateSerializer( serializers.ModelSerializer ):
             'creator',
         )
 
+
+# RATING SERIALIZERS
+
+class SetRatingSerializer( serializers.Serializer ):
+    """
+        Serializer for set value rating
+    """
+
+    rating = serializers.IntegerField()
+
+    def update(self, instance, validated_data):
+        user = self.context['request'].user
+        rating = validated_data['rating']
+
+        if rating > 0:
+            RatingManager.set_positive_rating( user, instance )
+        elif rating < 0:
+            RatingManager.set_negative_rating( user, instance )
+        else:
+            pass
+            # Code of destroy rating here
+
+        instance.rating = RatingManager.get_rating_of_object( instance )
+        instance.save()
+        
+        return instance
 
 
 # OTHER SERIALIZERS

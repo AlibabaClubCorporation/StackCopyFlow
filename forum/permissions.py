@@ -36,3 +36,13 @@ class IsOwnerOrSuperUser( permissions.BasePermission ):
         is_superuser = IsSuperUser.has_object_permission( self, request, view, obj )
 
         return is_owner or is_superuser
+
+class IsAuthenticatedAndNotOwner( permissions.BasePermission ):
+    """
+        Permission class
+         |
+        Access is allowed if user is authenticated and value of the 'creator' attribute of the model not matches that of the user performing the action
+    """
+
+    def has_object_permission(self, request, view, obj):
+        return permissions.IsAuthenticated.has_object_permission( self, request, view, obj ) and IsOwner.has_object_permission( self, request, view, obj )
