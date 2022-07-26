@@ -56,6 +56,13 @@ class Question( models.Model ):
 
         null = True,
     )
+    correct_answer = models.OneToOneField(
+        to = 'Answer',
+        on_delete = models.SET_NULL,
+        related_name = 'correctly_answered_question',
+
+        null = True,
+    )
     labels = models.ManyToManyField(
         to = Label,
         related_name = 'questions',

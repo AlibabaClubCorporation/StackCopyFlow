@@ -12,6 +12,7 @@ urlpatterns = [
     path( 'questions/create/', QuestionCreateAPIView.as_view(), name = 'question-create' ),
     path( 'questions/<int:pk>/', QuestionRetrieveAPIView.as_view(), name = 'question-retrieve' ),
     path( 'questions/<int:pk>/update/', QuestionUpdateAPIView.as_view(), name = 'question-update' ),
+    path( 'questions/<int:pk>/correct-answer-update/', CorrectAnswerInQuestionUpdateAPIView.as_view(), name = 'question-correct-answer-update' ),
     path( 'questions/<int:pk>/destroy/', QuestionDestroyAPIView.as_view(), name = 'question-destroy' ),
 
     # PATH OF ANSWER MODEL

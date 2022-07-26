@@ -67,6 +67,7 @@ class QuestionListSerializer( serializers.ModelSerializer ):
     """
 
     labels = LabelListSerializer( many = True )
+    is_answered = serializers.SerializerMethodField()
 
     class Meta:
         model = Question
@@ -74,9 +75,13 @@ class QuestionListSerializer( serializers.ModelSerializer ):
             'title',
             'date_of_creation',
             'labels',
+            'is_answered',
 
             'id',
         )
+    
+    def get_is_answered( self, obj ):
+        return obj.correct_answer != None
 
 class QuestionRetrieveSerializer( serializers.ModelSerializer ):
     """
@@ -84,22 +89,32 @@ class QuestionRetrieveSerializer( serializers.ModelSerializer ):
     """
 
     answers = serializers.SerializerMethodField()
+    correct_answer = AnswerSerializer( many = False )
+    labels = LabelListSerializer( many = True )
 
     class Meta:
         model = Question
         fields = (
             'title',
             'content',
-            'answers',
             'date_of_creation',
             'labels',
             'creator',
+            'correct_answer',
+            'answers',
 
             'id',
         )
 
     def get_answers( self, obj ):
-        return AnswerSerializer( Answer.objects.filter( parent = None, question = obj ), many = True ).data
+        return AnswerSerializer(
+            Answer.objects.filter(
+                parent = None,
+                question = obj,
+                correctly_answered_question = None
+            ),
+            many = True,
+        ).data
 
 class QuestionCreateSerializer( serializers.ModelSerializer ):
     """
@@ -134,3 +149,14 @@ class ContentUpdateSerializer( serializers.Serializer ):
         instance.save()
 
         return instance
+
+class CorrectAnswerUpdateSerializer( serializers.ModelSerializer ):
+    """
+        Serilizer for update 'correct answer' field in Question
+    """
+
+    class Meta:
+        model = Question
+        fields = (
+            'correct_answer',
+        )

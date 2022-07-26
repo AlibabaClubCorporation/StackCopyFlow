@@ -14,7 +14,7 @@ class QuestionListAPIView( ListAPIView ):
         View class for displaying a list of questions
     """
 
-    queryset = Question.objects.all()
+    queryset = Question.objects.all().prefetch_related('labels')
     serializer_class = QuestionListSerializer
     permission_classes = ( AllowAny, )
 
@@ -43,6 +43,15 @@ class QuestionUpdateAPIView( UpdateAPIView ):
     queryset = Question.objects.all()
     serializer_class = ContentUpdateSerializer
     permission_classes = ( IsOwnerOrSuperUser, )
+
+class CorrectAnswerInQuestionUpdateAPIView( UpdateAPIView ):
+    """
+        View class for update 'correct_answer' field in question
+    """
+
+    queryset = Question.objects.all()
+    serializer_class = CorrectAnswerUpdateSerializer
+    # permission_classes = 
 
 class QuestionDestroyAPIView( DestroyAPIView ):
     """
