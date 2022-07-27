@@ -25,8 +25,9 @@ class CustomUser( AbstractUser ):
         default = 'm'
     )
 
-    birth_date = models.DateField(
-    )
+    birth_date = models.DateField()
+
+    rating = models.IntegerField( default = 0 )
 
     registration_date = models.DateTimeField(
         auto_now_add = True,
@@ -39,4 +40,4 @@ class CustomUser( AbstractUser ):
 
     class Meta:
         pass
-        # ordering = [ 'rating', '-birth_date' ]
+        ordering = [ '-rating', '-registration_date' ]

@@ -10,4 +10,5 @@ urlpatterns = [
 
     path( 'users/',  CustomUserListAPIView.as_view(), name = 'custom_user-list'),
     path( 'users/<int:pk>/',  CustomUserRetrieveAPIView.as_view(), name = 'custom_user-retrieve'),
+    path( 'users/<int:pk>/update-rating/', CustomUserRatingUpdateAPIView.as_view(), name = 'custom_user-rating-update' ),
 ]

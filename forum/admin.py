@@ -55,11 +55,3 @@ class AnswerAdmin( MPTTModelAdmin ):
             'fields' : ( ( 'content', ), ( 'parent', ), )
         }),
     )
-
-@admin.register( Rating )
-class RatingAdmin( admin.ModelAdmin ):
-    """
-        Rating model class for admin panel
-    """
-
-    list_display = ( 'user', 'rating', 'content_type', 'content_object', 'object_pk' )

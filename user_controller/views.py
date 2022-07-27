@@ -1,7 +1,11 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 
 from .models import *
 from .serializers import *
+
+from rating_controller.serializers import SetRatingSerializer
+
 
 
 
@@ -22,3 +26,12 @@ class CustomUserRetrieveAPIView( RetrieveAPIView ):
 
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserRetrieveSerializer
+
+class CustomUserRatingUpdateAPIView( UpdateAPIView ):
+    """
+        View class for create/update/delete rating for User from User
+    """
+
+    queryset = CustomUser.objects.all()
+    serializer_class = SetRatingSerializer
+    permission_classes = ( IsAuthenticated, )

@@ -6,6 +6,7 @@ from .serilizers import *
 from .permissions import *
 
 from user_controller.models import *
+from rating_controller.serializers import *
 
 
 # QUESTION VIEWS
