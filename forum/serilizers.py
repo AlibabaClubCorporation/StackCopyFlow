@@ -33,6 +33,7 @@ class AnswerSerializer( serializers.ModelSerializer ):
         fields = (
             'creator',
             'content',
+            'rating',
             'date_of_creation',
             'children',
 
@@ -165,8 +166,7 @@ class SetRatingSerializer( serializers.Serializer ):
         elif rating < 0:
             RatingManager.set_negative_rating( user, instance )
         else:
-            pass
-            # Code of destroy rating here
+            RatingManager.destroy_rating( user, instance )
 
         instance.rating = RatingManager.get_rating_of_object( instance )
         instance.save()

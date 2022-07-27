@@ -94,9 +94,18 @@ class AnswerDestroyAPIView( DestroyAPIView ):
 
 class QuestionRatingUpdateAPIView( UpdateAPIView ):
     """
-        View class for create/update rating for Question from User
+        View class for create/update/delete rating for Question from User
     """
 
     queryset = Question.objects.all()
+    serializer_class = SetRatingSerializer
+    permission_classes = ( IsAuthenticatedAndNotOwner, )
+
+class AnswerRatingUpdateAPIView( UpdateAPIView ):
+    """
+        View class for create/update/delete rating for Answer from User
+    """
+
+    queryset = Answer.objects.all()
     serializer_class = SetRatingSerializer
     permission_classes = ( IsAuthenticatedAndNotOwner, )

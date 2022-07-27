@@ -49,9 +49,6 @@ class RatingManager:
         """
             Return True, if 'object' have a rating from 'user', else return False
         """
-    
-        if not user.is_authenticated:
-            return False
 
         object_type = ContentType.objects.get_for_model( object )
         rating = Rating.objects.filter(
@@ -67,9 +64,6 @@ class RatingManager:
             Return True, if 'object' have positive rating from 'user', else return False
         """
 
-        if not user.is_authenticated:
-            return False
-
         object_type = ContentType.objects.get_for_model( object )
         rating = Rating.objects.filter(
             content_type = object_type,
@@ -84,9 +78,6 @@ class RatingManager:
         """
             Return True, if 'object' have negative rating from 'user', else return False
         """
-
-        if not user.is_authenticated:
-            return False
 
         object_type = ContentType.objects.get_for_model( object )
         rating = Rating.objects.filter(
@@ -128,6 +119,19 @@ class RatingManager:
         """
 
         return RatingManager.get_positive_rating_of_object( object ) - RatingManager.get_negative_rating_of_object( object )
+    
+    def destroy_rating( user, object ):
+        """
+            Destroy rating of 'object' from 'user'
+        """
+
+        object_type = ContentType.objects.get_for_model( object )
+        Rating.objects.get(
+            content_type = object_type,
+            object_pk = object.pk,
+            user = user,
+        ).delete()
+
     
     def get_users_who_have_rated_object( object ):
         """

@@ -15,6 +15,7 @@ class Label( models.Model ):
 
     name = models.CharField(
         max_length = 64,
+        unique = True,
     )
 
     creator = models.ForeignKey(
@@ -91,6 +92,10 @@ class Answer( MPTTModel ):
     """
 
     content = models.TextField()
+
+    rating = models.IntegerField(
+        default = 0,
+    )
 
     date_of_creation = models.DateTimeField(
         auto_now_add = True,
