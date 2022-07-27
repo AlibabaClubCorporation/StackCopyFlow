@@ -59,6 +59,12 @@ class AnswerCreateSerializer( serializers.ModelSerializer ):
 
             'creator',
         )
+    
+    def validate_parent( self, value ):
+        if value.question.pk != int(self.initial_data['question']):
+            raise serializers.ValidationError( 'The specified "Answer" in the "Parent" field refers to another question', 400 )
+        
+        return value
 
 
 # QUESTION SERIALIZERS

@@ -18,8 +18,8 @@ urlpatterns = [
 
     # PATH OF ANSWER MODEL
 
-    path( 'questions/<int:pk>/create-answer/', AnswerCreateAPIView.as_view(), name = 'answer-create' ),
-    path( 'questions/<int:pk_of_question>/<int:pk>/update-answer/', AnswerUpdateAPIView.as_view(), name = 'answer-update' ),
-    path( 'questions/<int:pk_of_question>/<int:pk>/update-answer-rating/', AnswerRatingUpdateAPIView.as_view(), name = 'answer-rating-update' ),
-    path( 'questions/<int:pk_of_question>/<int:pk>/destroy-answer/', AnswerDestroyAPIView.as_view(), name = 'answer-destroy' ),
+    path( 'answers/create-answer/', AnswerCreateAPIView.as_view(), name = 'answer-create' ),
+    path( 'answers/<int:pk>/update-answer/', AnswerUpdateAPIView.as_view(), name = 'answer-update' ),
+    path( 'answer/<int:pk>/update-answer-rating/', AnswerRatingUpdateAPIView.as_view(), name = 'answer-rating-update' ),
+    path( 'answer/<int:pk>/destroy-answer/', AnswerDestroyAPIView.as_view(), name = 'answer-destroy' ),
 ]
