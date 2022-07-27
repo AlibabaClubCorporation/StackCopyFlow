@@ -51,7 +51,7 @@ class CorrectAnswerInQuestionUpdateAPIView( UpdateAPIView ):
 
     queryset = Question.objects.all()
     serializer_class = CorrectAnswerUpdateSerializer
-    # permission_classes = 
+    permission_classes = ( IsOwnerOrSuperUser, )
 
 class QuestionDestroyAPIView( DestroyAPIView ):
     """

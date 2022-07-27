@@ -1,3 +1,4 @@
+from http import server
 from rest_framework import serializers
 
 from .models import *
@@ -205,3 +206,9 @@ class CorrectAnswerUpdateSerializer( serializers.ModelSerializer ):
         fields = (
             'correct_answer',
         )
+    
+    def validate_correct_answer( self, value ):
+        if value.question != self.instance:
+            raise serializers.ValidationError( 'Cannot set "correct_answer" field for "Question" to "Answer" with "answer.question" field not equal to "question"' )
+
+        return value
