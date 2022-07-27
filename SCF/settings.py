@@ -97,18 +97,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    # },
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
 
@@ -139,24 +139,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES' : [
         'rest_framework.authentication.TokenAuthentication',
     ],
-
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    # 'PAGE_SIZE': 100,
 }
-
-# DJOSER {
-#     'PASSWORD_RESET_CONFIRM_URL' : '...' - URL для подтверждения сброса пароля 
-#     'USERNAME_RESET_CONFIRM_URL' : '...' - URL для подтверждения сброса имени 
-#     'ACTIVATION_URL' : '...' - URL для активации
-#     'SEND_ACTIVATION_EMAIL' : 'True/False'  -  Для отправки email 
-#     'SERIALIZERS' : {} - 
-# }
-
-# EMAIL_USE_LTS = True/False
-# EMAIL_HOST = 'smpt.gmail.com' - Хост отпрвки 
-# EMAIL_HOST_USER = 'почта отправителя' - Почта отправителя 
-# EMAIL_HOST_PASSWORD = 'пароль от почты отправителя' - Пароль от почты отпрвителя 
-# EMAIL_POER = 587
 
 
 INTERNAL_IPS = [

@@ -1,4 +1,3 @@
-from http import server
 from rest_framework import serializers
 
 from .models import *
@@ -63,7 +62,7 @@ class AnswerCreateSerializer( serializers.ModelSerializer ):
     
     def validate_parent( self, value ):
         if value.question.pk != int(self.initial_data['question']):
-            raise serializers.ValidationError( 'The specified "Answer" in the "Parent" field refers to another question', 400 )
+            raise serializers.ValidationError( 'The specified "Answer" in the "Parent" field refers to another question' )
         
         return value
 

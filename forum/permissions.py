@@ -45,4 +45,4 @@ class IsAuthenticatedAndNotOwner( permissions.BasePermission ):
     """
 
     def has_object_permission(self, request, view, obj):
-        return permissions.IsAuthenticated.has_object_permission( self, request, view, obj ) and IsOwner.has_object_permission( self, request, view, obj )
+        return permissions.IsAuthenticated.has_object_permission( self, request, view, obj ) and not IsOwner.has_object_permission( self, request, view, obj )

@@ -8,10 +8,11 @@ from user_controller.models import CustomUser
 
 class RatingManager:
     """
-        Class for management rating model
+        Class for management Rating model
     """
 
-    def set_positive_rating( user, object ):
+    @classmethod
+    def set_positive_rating( cls, user, object ):
         """
             Creates a positive rating for object from user
         """
@@ -28,7 +29,8 @@ class RatingManager:
 
         return rating
     
-    def set_negative_rating( user, object ):
+    @classmethod
+    def set_negative_rating( cls, user, object ):
         """
             Creates a negative rating for object from user
         """
@@ -45,11 +47,15 @@ class RatingManager:
 
         return rating
 
-    def is_object_having_rating_from_user( user, object ) -> bool:
+    @classmethod
+    def is_object_having_rating_from_user( cls, user, object ) -> bool:
         """
             Return True, if 'object' have a rating from 'user', else return False
         """
 
+        if user.is_authenticated != True:
+            return False
+
         object_type = ContentType.objects.get_for_model( object )
         rating = Rating.objects.filter(
             content_type = object_type,
@@ -59,11 +65,15 @@ class RatingManager:
 
         return rating.exists()
 
-    def is_object_having_positive_rating_from_user( user, object ) -> bool:
+    @classmethod
+    def is_object_having_positive_rating_from_user( cls, user, object ) -> bool:
         """
             Return True, if 'object' have positive rating from 'user', else return False
         """
 
+        if user.is_authenticated != True:
+            return False
+
         object_type = ContentType.objects.get_for_model( object )
         rating = Rating.objects.filter(
             content_type = object_type,
@@ -74,11 +84,15 @@ class RatingManager:
 
         return rating.exists()
     
-    def is_object_having_negative_rating_from_user( user, object ) -> bool:
+    @classmethod
+    def is_object_having_negative_rating_from_user( cls, user, object ) -> bool:
         """
             Return True, if 'object' have negative rating from 'user', else return False
         """
 
+        if user.is_authenticated != True:
+            return False
+
         object_type = ContentType.objects.get_for_model( object )
         rating = Rating.objects.filter(
             content_type = object_type,
@@ -89,9 +103,10 @@ class RatingManager:
 
         return rating.exists()
 
-    def get_positive_rating_of_object( object ):
+    @classmethod
+    def get_positive_rating_of_object( cls, object ):
         """
-            Return positive rating count
+            Return positive rating of object count
         """
 
         object_type = ContentType.objects.get_for_model( object )
@@ -101,9 +116,10 @@ class RatingManager:
             rating = 1,
         ).count()
     
-    def get_negative_rating_of_object( object ):
+    @classmethod
+    def get_negative_rating_of_object( cls, object ):
         """
-            Return negative rating count
+            Return negative rating of object count
         """
 
         object_type = ContentType.objects.get_for_model( object )
@@ -113,14 +129,16 @@ class RatingManager:
             rating = -1,
         ).count()
     
-    def get_rating_of_object( object ):
+    @classmethod
+    def get_rating_of_object( cls, object ):
         """
             Return rating of object
         """
 
-        return RatingManager.get_positive_rating_of_object( object ) - RatingManager.get_negative_rating_of_object( object )
+        return cls.get_positive_rating_of_object( object ) - cls.get_negative_rating_of_object( object )
     
-    def destroy_rating( user, object ):
+    @classmethod
+    def destroy_rating( cls, user, object ):
         """
             Destroy rating of 'object' from 'user'
         """
@@ -132,8 +150,8 @@ class RatingManager:
             user = user,
         ).delete()
 
-    
-    def get_users_who_have_rated_object( object ):
+    @classmethod
+    def get_users_who_have_rated_object( cls, object ):
         """
             Return all users who have rated object
         """
