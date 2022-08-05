@@ -125,7 +125,8 @@ class QuestionRetrieveSerializer( serializers.ModelSerializer ):
             Answer.objects.filter(
                 parent = None,
                 question = obj,
-                correctly_answered_question = None
+                correctly_answered_question = None,
+                creator__groups__name__in = [ 'admin', 'user' ]
             ),
             many = True,
         ).data

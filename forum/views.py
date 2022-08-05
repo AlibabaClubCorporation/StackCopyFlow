@@ -16,7 +16,7 @@ class QuestionListAPIView( ListAPIView ):
         View class for displaying a list of questions
     """
 
-    queryset = Question.objects.all().prefetch_related('labels')
+    queryset = Question.objects.filter( creator__groups__name__in = [ 'admin', 'user' ] ).prefetch_related('labels')
     serializer_class = QuestionListSerializer
     permission_classes = ( AllowAny, )
 
@@ -25,7 +25,7 @@ class QuestionRetrieveAPIView( RetrieveAPIView ):
         View class for displaying a detail information of question
     """
 
-    queryset = Question.objects.all()
+    queryset = Question.objects.filter( creator__groups__name__in = [ 'admin', 'user' ] ).all()
     serializer_class = QuestionRetrieveSerializer
     permission_classes = ( AllowAny, )
 
