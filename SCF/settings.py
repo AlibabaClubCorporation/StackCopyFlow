@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 
     'forum.apps.ForumConfig',
     'user_controller.apps.UserControllerConfig',
-    'rating_controller.apps.RatingControllerConfig',
+    'user_opinion_controller.apps.UserOpinionControllerConfig',
 ]
 
 MIDDLEWARE = [

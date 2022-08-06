@@ -1,3 +1,5 @@
+from django.db.models import Prefetch
+
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
@@ -6,7 +8,7 @@ from .serilizers import *
 from .permissions import *
 
 from user_controller.models import *
-from rating_controller.serializers import *
+from user_opinion_controller.serializers import *
 
 
 # QUESTION VIEWS
@@ -16,7 +18,7 @@ class QuestionListAPIView( ListAPIView ):
         View class for displaying a list of questions
     """
 
-    queryset = Question.objects.filter( creator__groups__name__in = [ 'admin', 'user' ] ).prefetch_related('labels')
+    queryset = Question.objects.filter( creator__groups__name__in = [ 'admin', 'user' ] ).prefetch_related( 'labels' )
     serializer_class = QuestionListSerializer
     permission_classes = ( AllowAny, )
 
@@ -25,7 +27,7 @@ class QuestionRetrieveAPIView( RetrieveAPIView ):
         View class for displaying a detail information of question
     """
 
-    queryset = Question.objects.filter( creator__groups__name__in = [ 'admin', 'user' ] ).all()
+    queryset = Question.objects.filter( creator__groups__name__in = [ 'admin', 'user' ] )
     serializer_class = QuestionRetrieveSerializer
     permission_classes = ( AllowAny, )
 

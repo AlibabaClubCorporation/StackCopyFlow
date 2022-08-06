@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import *
 
 from forum.serilizers import QuestionListSerializer
-from rating_controller.services.service_of_rating import RatingManager
+from user_opinion_controller.services.service_of_rating import RatingManager
 
 
 

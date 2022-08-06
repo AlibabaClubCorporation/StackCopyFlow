@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
 
-from rating_controller.serializers import SetRatingSerializer
+from user_opinion_controller.serializers import SetRatingSerializer
 
 
 

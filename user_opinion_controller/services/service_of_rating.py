@@ -1,7 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 
-from rating_controller.models import Rating
-
+from user_opinion_controller.models import Rating
 from user_controller.models import CustomUser
 
 
