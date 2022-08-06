@@ -1,4 +1,7 @@
+from dataclasses import fields
 from rest_framework import serializers
+
+from user_opinion_controller.models import AppealToUser
 
 from .services.service_of_rating import RatingManager
 
@@ -27,3 +30,25 @@ class SetRatingSerializer( serializers.Serializer ):
         instance.save()
         
         return instance
+
+# APPEAL SERIALIZER
+
+class DisplayAppealToUserSerializer( serializers.ModelSerializer ):
+    """
+        Serializer for display 'appeal to user'
+    """
+
+    class Meta:
+        model = AppealToUser
+        fields = '__all__'
+
+class AppealToUserCreateSerializer( serializers.ModelSerializer ):
+    """
+        Serializer for create 'appeal to user'
+    """
+
+    sender = serializers.HiddenField( default = serializers.CurrentUserDefault() )
+
+    class Meta:
+        model = AppealToUser
+        fields = '__all__'

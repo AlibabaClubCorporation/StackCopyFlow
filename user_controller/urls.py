@@ -11,4 +11,7 @@ urlpatterns = [
     path( 'users/',  CustomUserListAPIView.as_view(), name = 'custom_user-list'),
     path( 'users/<int:pk>/',  CustomUserRetrieveAPIView.as_view(), name = 'custom_user-retrieve'),
     path( 'users/<int:pk>/update-rating/', CustomUserRatingUpdateAPIView.as_view(), name = 'custom_user-rating-update' ),
+
+    path( 'appeals/', AppealToUserListAPIView.as_view(), name = 'appeal-list' ),
+    path( 'appeals/create/', AppealToUserCreateAPIView.as_view(), name = 'appeal-create' )
 ]

@@ -8,5 +8,6 @@ from .models import AppealToUser
 
 @receiver( post_save, sender = AppealToUser )
 def check_auto_banned( sender, instance, created, **kwargs ):
-    if AppealToUser.objects.filter( receiver = instance.receiver ).count() > 1:
+    if AppealToUser.objects.filter( receiver = instance.receiver ).count() > 4:
+        instance.receiver.groups.clear()
         instance.receiver.groups.add( Group.objects.get( name = 'banned' ) )
