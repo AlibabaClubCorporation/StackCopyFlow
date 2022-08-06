@@ -2,7 +2,39 @@ from rest_framework import permissions
 
 
 
-class IsSuperUser( permissions.BasePermission ):
+class StandartPermission( permissions.BasePermission ):
+    """
+        Standart permission for forum app
+    """
+
+    def has_object_permission(self, request, view, obj):
+        try:
+            return not request.user.is_banned
+        except AttributeError:
+            return True
+    
+    def has_permission(self, request, view):
+        try:
+            return not request.user.is_banned
+        except AttributeError:
+            return True
+
+class IsAuthenticated( StandartPermission ):
+    """
+        Standart is authenticated permission
+    """
+
+    def has_object_permission(self, request, view, obj):
+        return \
+            super().has_object_permission(request, view, obj) \
+            and permissions.IsAuthenticated.has_object_permission( self, request, view, obj)
+        
+    def has_permission(self, request, view):
+        return \
+            super().has_permission(request, view) \
+            and permissions.IsAuthenticated.has_permission( self, request, view )
+
+class IsSuperUser( StandartPermission ):
     """
         Permission class | Access is allowed if user is superuser
     """
@@ -13,7 +45,7 @@ class IsSuperUser( permissions.BasePermission ):
     def has_permission(self, request, view):
         return request.user.is_superuser
 
-class IsOwner( permissions.BasePermission ):
+class IsOwner( StandartPermission ):
     """
         Permission class 
          | 
@@ -27,7 +59,7 @@ class IsOwner( permissions.BasePermission ):
         return False
 
 
-class IsOwnerOrSuperUser( permissions.BasePermission ):
+class IsOwnerOrSuperUser( StandartPermission ):
     """
         Permission class
          | 
@@ -38,9 +70,11 @@ class IsOwnerOrSuperUser( permissions.BasePermission ):
         is_owner = IsOwner.has_object_permission( self, request, view, obj )
         is_superuser = IsSuperUser.has_object_permission( self, request, view, obj )
 
-        return is_owner or is_superuser
+        return \
+            is_owner or is_superuser \
+            and super().has_object_permission( request, view, obj )
 
-class IsAuthenticatedAndNotOwner( permissions.BasePermission ):
+class IsAuthenticatedAndNotOwner( StandartPermission ):
     """
         Permission class
          |
@@ -48,4 +82,7 @@ class IsAuthenticatedAndNotOwner( permissions.BasePermission ):
     """
 
     def has_object_permission(self, request, view, obj):
-        return permissions.IsAuthenticated.has_object_permission( self, request, view, obj ) and not IsOwner.has_object_permission( self, request, view, obj )
+        return \
+            permissions.IsAuthenticated.has_object_permission( self, request, view, obj ) \
+            and not IsOwner.has_object_permission( self, request, view, obj ) \
+            and super().has_object_permission( request, view, obj )

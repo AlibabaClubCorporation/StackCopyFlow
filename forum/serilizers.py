@@ -126,7 +126,7 @@ class QuestionRetrieveSerializer( serializers.ModelSerializer ):
                 parent = None,
                 question = obj,
                 correctly_answered_question = None,
-                creator__groups__name__in = [ 'admin', 'user' ]
+                creator__is_banned = False,
             ),
             many = True,
         ).data
