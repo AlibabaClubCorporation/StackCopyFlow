@@ -57,6 +57,6 @@ class AppealToUser( models.Model ):
         related_name='received_appeals',
     )
 
-    content = models.CharField(
+    content = models.CharField( 
         max_length = 2500,
     )
