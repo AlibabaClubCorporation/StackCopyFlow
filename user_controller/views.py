@@ -2,14 +2,14 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView,
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from user_opinion_controller.models import AppealToUser
+from user_opinion_controller.models import ComplaintToUser
 from forum.permissions import IsSuperUser, IsAuthenticated
 
 from .models import *
 from .serializers import *
 
-from user_opinion_controller.serializers import SetRatingSerializer, DisplayAppealToUserSerializer, AppealToUserCreateSerializer
-from user_opinion_controller.services.service_of_appeal import UserBannedController
+from user_opinion_controller.serializers import SetRatingSerializer, DisplayComplaintToUserSerializer, ComplaintToUserCreateSerializer, BannedSerializer, UnbannedSerializer
+from user_opinion_controller.services.service_of_complaint import UserBannedController
 
 
 
@@ -43,28 +43,28 @@ class CustomUserRatingUpdateAPIView( UpdateAPIView ):
     serializer_class = SetRatingSerializer
     permission_classes = ( IsAuthenticated, )
 
-# APPEAL VIEWS
+# COMPLAINT VIEWS
 
-class AppealToUserListAPIView( ListAPIView ):
+class ComplaintToUserListAPIView( ListAPIView ):
     """
-        View class for display list appeal to user
+        View class for display list Complaint to user
     """
 
-    serializer_class = DisplayAppealToUserSerializer
+    serializer_class = DisplayComplaintToUserSerializer
     permission_classes = ( IsAuthenticated, )
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            return AppealToUser.objects.all()
+            return ComplaintToUser.objects.all()
         
-        return AppealToUser.objects.filter( sender = self.request.user )
+        return ComplaintToUser.objects.filter( sender = self.request.user )
 
-class AppealToUserCreateAPIView( CreateAPIView ):
+class ComplaintToUserCreateAPIView( CreateAPIView ):
     """
-        View class for create appeal to user
+        View class for create Complaint to user
     """
 
-    serializer_class = AppealToUserCreateSerializer
+    serializer_class = ComplaintToUserCreateSerializer
 
 # BANNED / UNBANNED VIEWS
 
@@ -78,15 +78,19 @@ class BannAPIView( APIView ):
     def post( self, request ):
         """ Ban user """
 
-        banned_user_pk = request.POST.get( 'banned_user_pk' )
+        serializer = BannedSerializer( data = request.POST )
 
-        if banned_user_pk == None:
-            return Response( data = { 'FIELD ERROR' : 'field "banned_user_pk" is required' }, status = 400 )
+        serializer.is_valid()
 
-        banned_user = CustomUser.objects.get( pk = banned_user_pk )
+        banned_user = CustomUser.objects.get( pk = serializer.validated_data['pk_of_complained_user'] )
         UserBannedController.user_blocking( banned_user )
 
         return Response( status = 201 )
+        # На самом деле, я не уверен что тут есть необходимость что-то возвращать, в плане сериализатора, я так понима. речь о
+        # return Responce( data = serializer.validated_data, status = 201 ), но фактически будет возращаться указанный ключ, и 
+        # я не очень понимаю что должно быть возвращенно, это вью по-идеи для совершения действия, результат который должно быть
+        # выполнение, или не выполнение поставленной задача, то есть, http коды 201 или другие.
+        # Надеюсь обьяснил что я имею ввиду
 
 class UnbannAPIView( APIView ):
     """
@@ -98,15 +102,19 @@ class UnbannAPIView( APIView ):
     def post( self, request ):
         """ Unban user """
 
-        unbanned_user_pk = request.POST.get( 'unbanned_user_pk' )
+        serializer = UnbannedSerializer( data = request.POST )
 
-        if unbanned_user_pk == None:
-            return Response( data = { 'FIELD ERROR' : ' field "unbanned_user_pk" is required' }, status = 400 )
+        serializer.is_valid()
 
-        unbanned_user = CustomUser.objects.get( pk = unbanned_user_pk )
-        UserBannedController.user_unblocking( unbanned_user )
+        banned_user = CustomUser.objects.get( pk = serializer.validated_data['pk_of_unbanned_user'] )
+        UserBannedController.user_unblocking( banned_user )
 
         return Response( status = 201 )
+        # На самом деле, я не уверен что тут есть необходимость что-то возвращать, в плане сериализатора, я так понима. речь о
+        # return Responce( data = serializer.validated_data, status = 201 ), но фактически будет возращаться указанный ключ, и 
+        # я не очень понимаю что должно быть возвращенно, это вью по-идеи для совершения действия, результат который должно быть
+        # выполнение, или не выполнение поставленной задача, то есть, http коды 201 или другие.
+        # Надеюсь обьяснил что я имею ввиду
     
 class BannedUserListAPIView( ListAPIView ):
     """

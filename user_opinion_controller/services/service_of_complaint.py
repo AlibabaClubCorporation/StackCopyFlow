@@ -1,6 +1,4 @@
-from django.contrib.auth.models import Group
-
-from user_opinion_controller.models import AppealToUser, CustomUser
+from user_opinion_controller.models import ComplaintToUser, CustomUser
 
 
 

@@ -1,7 +1,6 @@
-from dataclasses import fields
 from rest_framework import serializers
 
-from user_opinion_controller.models import AppealToUser
+from user_opinion_controller.models import ComplaintToUser
 
 from .services.service_of_rating import RatingManager
 
@@ -31,24 +30,40 @@ class SetRatingSerializer( serializers.Serializer ):
         
         return instance
 
-# APPEAL SERIALIZER
+# COMPLAINT SERIALIZER
 
-class DisplayAppealToUserSerializer( serializers.ModelSerializer ):
+class DisplayComplaintToUserSerializer( serializers.ModelSerializer ):
     """
-        Serializer for display 'appeal to user'
+        Serializer for display 'Complaint to user'
     """
 
     class Meta:
-        model = AppealToUser
+        model = ComplaintToUser
         fields = '__all__'
 
-class AppealToUserCreateSerializer( serializers.ModelSerializer ):
+class ComplaintToUserCreateSerializer( serializers.ModelSerializer ):
     """
-        Serializer for create 'appeal to user'
+        Serializer for create 'Complaint to user'
     """
 
     sender = serializers.HiddenField( default = serializers.CurrentUserDefault() )
 
     class Meta:
-        model = AppealToUser
+        model = ComplaintToUser
         fields = '__all__'
+
+# -- Banned \ Unbanned serializer --
+
+class BannedSerializer( serializers.Serializer ):
+    """
+        Serializer for banned complained user
+    """
+
+    pk_of_complained_user = serializers.IntegerField()
+
+class UnbannedSerializer( serializers.Serializer ):
+    """
+        Serializer for unbanned user
+    """
+
+    pk_of_unbanned_user = serializers.IntegerField()

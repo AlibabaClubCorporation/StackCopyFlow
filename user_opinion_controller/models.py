@@ -38,9 +38,9 @@ class Rating( models.Model ):
     )
 
 
-class AppealToUser( models.Model ):
+class ComplaintToUser( models.Model ):
     """
-        Model of appeal to user
+        Model of Complaint to user
     """
 
     sender = models.ForeignKey(

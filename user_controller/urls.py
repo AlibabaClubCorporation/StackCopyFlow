@@ -12,8 +12,8 @@ urlpatterns = [
     path( 'users/<int:pk>/',  CustomUserRetrieveAPIView.as_view(), name = 'custom_user-retrieve'),
     path( 'users/<int:pk>/update-rating/', CustomUserRatingUpdateAPIView.as_view(), name = 'custom_user-rating-update' ),
 
-    path( 'appeals/', AppealToUserListAPIView.as_view(), name = 'appeal-list' ),
-    path( 'appeals/create/', AppealToUserCreateAPIView.as_view(), name = 'appeal-create' ),
+    path( 'complaints/', ComplaintToUserListAPIView.as_view(), name = 'complaint-list' ),
+    path( 'complaints/create/', ComplaintToUserCreateAPIView.as_view(), name = 'complaint-create' ),
 
     path( 'bann/', BannAPIView.as_view(), name = 'custom_user-ban' ),
     path( 'unbann/', UnbannAPIView.as_view(), name = 'custom_user-unban' ),
