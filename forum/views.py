@@ -5,7 +5,7 @@ from .serilizers import *
 from .permissions import *
 
 from user_controller.models import *
-from user_opinion_controller.serializers import *
+from user_controller.serializers import *
 
 
 # QUESTION VIEWS

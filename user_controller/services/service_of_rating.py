@@ -1,7 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 
-from user_opinion_controller.models import Rating
-from user_controller.models import CustomUser
+from user_controller.models import *
 
 
 
@@ -27,7 +26,7 @@ class RatingManager:
         rating.save()
 
         return rating
-    
+
     @classmethod
     def set_negative_rating( cls, user, object ):
         """

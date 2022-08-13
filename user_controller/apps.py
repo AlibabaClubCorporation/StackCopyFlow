@@ -6,4 +6,6 @@ class UserControllerConfig(AppConfig):
     name = 'user_controller'
 
     def ready(self) -> None:
+        from . import signals
+
         return super().ready()

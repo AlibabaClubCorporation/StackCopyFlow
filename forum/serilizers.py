@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import *
-from user_opinion_controller.services.service_of_rating import RatingManager
+from user_controller.services.service_of_rating import RatingManager
 
 
 

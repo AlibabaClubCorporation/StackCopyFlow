@@ -1,4 +1,4 @@
-from user_opinion_controller.models import ComplaintToUser, CustomUser
+from user_controller.models import CustomUser
 
 
 
